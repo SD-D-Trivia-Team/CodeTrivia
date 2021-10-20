@@ -1,20 +1,23 @@
 {
   "name": "codetrivia",
   "version": "1.0.0",
-  "description": "Code Trivia Game",
+  "description": "trivia app",
   "main": "index.js",
   "scripts": {
-    "test": "none",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SD-D-Trivia-Team/CodeTrivia.git"
   },
-  "author": "bonada",
+  "author": "",
   "license": "UNLICENSED",
   "bugs": {
     "url": "https://github.com/SD-D-Trivia-Team/CodeTrivia/issues"
   },
-  "homepage": "https://github.com/SD-D-Trivia-Team/CodeTrivia#readme"
+  "homepage": "https://github.com/SD-D-Trivia-Team/CodeTrivia#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
