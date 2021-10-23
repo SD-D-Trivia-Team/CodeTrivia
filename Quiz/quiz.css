@@ -1,0 +1,36 @@
+html {
+    min-height: 100vh;
+}
+
+body {
+    background-color: #1F2521;
+    overflow: hidden;
+}
+
+.navbar {
+    background-color: #499459;
+}
+
+.container {
+    max-width: 95%;
+    margin-top: 2%;
+    height: 100%;
+}
+
+.row {
+    height: 50%;
+}
+
+.col-sm {
+    color: #FFFFFF;
+    width: 18%;
+    height: 100%;
+    margin-left: 3%;
+    margin-right: 3%;
+    background-color: #499459;
+    border-radius: 25px;
+    padding: 0 0 0 0;
+    -moz-box-shadow:    inset 0 0 10px #000000;
+    -webkit-box-shadow: inset 0 0 10px #000000;
+    box-shadow:         inset 0 0 10px #000000;
+}
