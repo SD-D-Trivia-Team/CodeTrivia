@@ -1,0 +1,27 @@
+/*Footer stylings*/
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background-color: #499459;
+}
+
+.footer-container {
+    margin-top:0%;
+    text-align:center;
+    color:#FFFFFF;
+
+}
+
+.footer-links{
+    height:100%;
+}
+
+/*Stylings for footer links*/
+.footer-link a{
+    color:#FFFFFF;
+    padding-right:5px;
+    padding-left:5px;
+}
