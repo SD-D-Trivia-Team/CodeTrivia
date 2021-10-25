@@ -1,5 +1,5 @@
 html {
-    min-height: 100vh;
+    min-height: 200vh;
 }
 
 body {
@@ -19,19 +19,37 @@ body {
 
 .row {
     height: 50%;
+    margin-bottom: 3%;
+}
+
+.row-button{
+    height: 40vh;
 }
 
 .col-sm {
-    color: #FFFFFF;
-    font-size: 3%;
-    width: 18%;
     height: 100%;
+    margin-left: 3%;
+    margin-right: 3%;
+    background-color: #49945900;
+    border-radius: 25px;
+    padding: 0 0 0 0;
+    -moz-box-shadow:    inset 0 0 10px #00000000;
+    -webkit-box-shadow: inset 0 0 10px #00000000;
+    box-shadow:         inset 0 0 10px #00000000;
+}
+
+
+.col-user {
+    content:"";
+    color: #ffffff;
+    width: 30%;
+    height: 15vh;
     margin-left: 3%;
     margin-right: 3%;
     background-color: #499459;
     border-radius: 25px;
     padding: 0 0 0 0;
-    -moz-box-shadow:    inset 0 0 10px #000000;
-    -webkit-box-shadow: inset 0 0 10px #000000;
-    box-shadow:         inset 0 0 10px #000000;
+    -moz-box-shadow:    inset 0 0 10px #00000000;
+    -webkit-box-shadow: inset 0 0 10px #00000000;
+    box-shadow:         inset 0 0 10px #00000000;
 }
