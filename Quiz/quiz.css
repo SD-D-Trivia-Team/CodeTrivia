@@ -1,14 +1,15 @@
-body {
-    background-color: #1F2521;
-    /* overflow: hidden; */
+::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
 }
 
-h1, h2, h3, h4{
-    color: #FFFFFF;
+body {
+    background-color: #1F2521;
+    color: #ffffff;
 }
 
 .navbar {
-    background-color: #499459;
+    background-color: hsl(133, 34%, 43%);
 }
 
 .container {
@@ -42,7 +43,7 @@ h1, h2, h3, h4{
 
 .questiontext {
     /* padding-top: vh; */
-    font-size: 2em;
+    font-size: 200%;
     width: 100%;
     margin: 0;
     position: absolute;
