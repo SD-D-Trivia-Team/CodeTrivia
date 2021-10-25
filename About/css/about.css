@@ -1,4 +1,10 @@
 /*Main stylings for the about page*/
+/*Overflow meant to deal with really thin displays if it comes to a point
+where the content has to overflow vertically.*/
+html{
+    overflow-y:auto;
+}
+
 #about-text-container{
     min-height:40%;
 }
