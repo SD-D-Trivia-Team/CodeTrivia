@@ -1,0 +1,97 @@
+/*Main stylings for the about page*/
+/*Overflow meant to deal with really thin displays if it comes to a point
+where the content has to overflow vertically.*/
+html{
+    overflow-y:auto;
+}
+
+#about-text-container{
+    min-height:40%;
+}
+
+.container{
+    margin-top:0;
+}
+
+.about-header{
+    color:#499459;
+    text-align:center;
+}
+
+.about-text-section{
+    margin-top:20px;
+    text-align:center;
+    overflow-wrap:break-word;
+    animation: fade-in 1s;
+    -webkit-animation: fade-in 1s;
+    -moz-animation: fade-in 1s;
+    -o-animation: fade-in 1s;
+    -ms-animation: fade-in 1s;
+}
+
+.about-text{
+    color:#FFFFFF;
+    font-size:18px;
+}
+
+
+/*Keyframes for the fade in animation for
+text sections*/
+@keyframes fade-in{
+    0% {opacity:0; top:-5px;}
+    100% {opacity:1; top:0;}
+}
+
+/*Media settings, meant to adjust styling
+for different devices/resolutions to make
+the website more accessible*/
+@media (max-width:1000px){
+    .about-text{
+        font-size:15px;
+    }
+    .about-header{
+        font-size:20px;
+    }
+}
+@media (min-width:1000px){
+    .about-text{
+        font-size:18px;
+    }
+}
+
+@media (min-width:1500px){
+    .about-text{
+        font-size:30px;
+    }
+    .about-header{
+        font-size:40px;
+    }
+}
+
+@media (max-width:650px){
+    .about-text{
+        font-size:12px;
+    }
+}
+
+@media (max-width:575px){
+    #about-section-1{
+        margin-top:20px;
+    }
+    .about-text-section{
+        margin-top:0;
+    }
+    .navbar-brand img{
+        width:150px;
+        height:30px;
+    }
+}
+
+@media (max-width:400px){
+    .about-header{
+        font-size:18px;
+    }
+    .about-text{
+        font-size:10px;
+    }
+}
