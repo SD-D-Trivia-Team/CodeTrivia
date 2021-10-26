@@ -53,9 +53,9 @@ the website more accessible*/
         font-size:20px;
     }
 }
-@media (min-width:1000px){
+@media (min-width:400px){
     .about-text{
-        font-size:18px;
+        font-size:16px;
     }
 }
 
@@ -68,15 +68,9 @@ the website more accessible*/
     }
 }
 
-@media (max-width:650px){
-    .about-text{
-        font-size:12px;
-    }
-}
-
 @media (max-width:575px){
     #about-section-1{
-        margin-top:20px;
+        margin-top:10px;
     }
     .about-text-section{
         margin-top:0;
@@ -84,14 +78,5 @@ the website more accessible*/
     .navbar-brand img{
         width:150px;
         height:30px;
-    }
-}
-
-@media (max-width:400px){
-    .about-header{
-        font-size:18px;
-    }
-    .about-text{
-        font-size:10px;
     }
 }
