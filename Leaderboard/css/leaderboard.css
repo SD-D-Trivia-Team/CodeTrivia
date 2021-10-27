@@ -1,0 +1,128 @@
+/*Styling for the leaderboard*/
+
+/*Initial text color setting*/
+.container{
+    color:#FFFFFF;
+}
+
+/*Styling for header*/
+
+.row{
+    margin:0 12.5%auto 12.5%;
+}
+#leaderboard-header{
+    margin-top:10px;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+#back-button{
+    width:15%;
+    color:#FFFFFF;
+}
+
+#leaderboard-header-text{
+    width:75%;
+}
+
+/*Styling for leaderboard*/
+.leaderboard-number{
+    margin:auto;
+}
+
+#top-leaderboard-entry{
+    border-top:2px solid grey;
+}
+
+#top-leaderboard-img{
+    height:50px;
+    width:50px;
+}
+
+#top-leaderboard-name{
+    font-size:1.5rem;
+}
+.leaderboard-entry{
+    padding-top:5px;
+    padding-bottom:5px;
+    text-align:center;
+    border-bottom:2px solid grey;
+}
+
+.auto-marg{
+    margin:auto;
+}
+
+.leaderboard-name{
+    text-align:left;
+    font-size:1rem;
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+    animation-delay:0.5s;
+}
+
+.leaderboard-score{
+    color:#77FA94;
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+    animation-delay:1s;
+}
+
+.leaderboard-img{
+    margin:auto;
+    width:40px;
+    height:40px;
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+}
+
+/*Keyframe animation that leaderboard entries use*/
+@keyframes fade-in-left{
+    0%{opacity:0; left:-10px;}
+    100%{opacity:1; left:0}
+}
+
+/*Media queries to fit text/elements based on screen dimensions*/
+@media(max-width:700px){
+    .leaderboard-name{
+        font-size:0.8rem;
+    }
+    #top-leaderboard-name{
+        font-size:1.25rem;
+    }
+}
+
+@media(max-width:650px){
+    #top-leaderboard-img{
+       width:50px;
+       height:50px;
+    }
+}
+
+@media (max-width:575px){
+    .navbar-brand img{
+        width:150px;
+        height:30px;
+    }
+    .leaderboard-entry{
+        padding-bottom:10px;
+    }
+    .leaderboard-name{
+        text-align:center;
+    }
+    #back-button{
+        width:100px;
+    }
+}
