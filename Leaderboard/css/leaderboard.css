@@ -1,0 +1,83 @@
+/*Styling for the leaderboard*/
+
+/*Initial text color setting*/
+.container{
+    color:#FFFFFF;
+}
+
+/*Styling for header*/
+
+.row{
+    margin:0 12.5%auto 12.5%;
+}
+#leaderboard-header{
+    margin-top:10px;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+.leaderboard-number{
+    margin:auto;
+}
+
+#top-leaderboard-entry{
+    border-top:2px solid grey;
+}
+.leaderboard-entry{
+    text-align:center;
+    border-bottom:2px solid grey;
+}
+
+.auto-marg{
+    margin:auto;
+}
+
+.leaderboard-name{
+    font-size:1rem;
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+    animation-delay:0.5s;
+}
+
+.leaderboard-score{
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+    animation-delay:1s;
+}
+
+.leaderboard-img{
+    width:40px;
+    height:40px;
+    opacity:0;
+    animation: fade-in-left 1s forwards;
+    -webkit-animation: fade-in-left 1s forwards;
+    -moz-animation: fade-in-left 1s forwards;
+    -o-animation: fade-in-left 1s forwards;
+    -ms-animation: fade-in-left 1s forwards;
+}
+
+@keyframes fade-in-left{
+    0%{opacity:0; left:-10px;}
+    100%{opacity:1; left:0}
+}
+
+@media (max-width:575px){
+    .navbar-brand img{
+        width:150px;
+        height:30px;
+    }
+}
+
+@media(max-width:700px){
+    .leaderboard-name{
+        font-size:0.8rem;
+    }
+}
