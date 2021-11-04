@@ -6,8 +6,8 @@ const { json } = require('body-parser');
 const app = express();
 const port = 3000;
 
-const clientID = 'e4baa49643af3729d64f';
-const clientSecret = 'dbfda8a0663d4b5846515b75e7a1d01e163e17f9';
+const clientID = 'PUT-CLIENT-ID-HERE';
+const clientSecret = 'PUT-CLIENT-SECRET-HERE';
 const user = {
     userName: '',
     userId: ''
