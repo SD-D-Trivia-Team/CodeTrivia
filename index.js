@@ -11,6 +11,10 @@ function getQuestions() {
             });
 }
 
+//load function: loads when the HTML document is ready. 
+//Used as a login check for now: if there is information stored
+//about the user set their github profile picture and the logout endpoint,
+//if not set a default avatar and the login endpoint.
 $(document).ready(function() {
     fetch("http://localhost:3000/user", {
         method: 'GET'
