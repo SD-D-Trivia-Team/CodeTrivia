@@ -46,6 +46,12 @@ app.get('/get-questions' , async (req, res) =>{
     }
   })
 
+
+//github user server work (Harrison):
+//functions: 
+//1.) Authorize a user using Github OAuth's service
+//2.) Using the access token given, get the user's information to be stored
+//in the backend.
 //get the information stored
 function getUser(){
     return user;
@@ -61,8 +67,6 @@ async function setUser(name_value, id_value){
 //function that gets the access token that can then be used to get
 //the user's information to be stored in the database
 async function performUserCallbackFunction(codeName){
-    console.log('Running callback function');
-    console.log(codeName);
     const body = {
         client_id: clientID,
         client_secret: clientSecret,
@@ -92,10 +96,11 @@ async function performUserLookup(user_token){
         headers: {Authorization: `token ${user_token}`, accept: 'application/json'}
     });
     const user_json = await response.json();
-    console.log(user_json.login);
     const set = await setUser(user_json.login, user_json.id);
     return user_json.login;
 }
+
+//github oauth & user endpoints
 
 //send user information back
 app.get('/user', (req, res) => {
@@ -111,22 +116,22 @@ app.get('/user/login', (req, res) => {
 //that gets the user's information based on the code from authorization
 //that then sets the user's username and email into the database.
 app.get('/user/login/callbackfunc', async (req,res) => {
-    console.log(req.query.login);
+    
+    //perform callback and user lookup 
     var access_obj = await performUserCallbackFunction(req.query.code);
-    console.log(access_obj);
     var user_obj = await performUserLookup(access_obj.access_token);
-    console.log(user_obj);
-    console.log(user);
-    //redirect back to the home/about/whatever page is decided as 
-    //a redirect page for the result
+
+    //redirect back to the home/about/whatever page is decided
     res.redirect('http://localhost:3000/about');
 });
 
-//sets user server information back to defaults
+//sets server user information back to defaults
 app.get('/user/logout', (req, res) => {
     setUser('','');
     res.redirect('http://localhost:3000/about');
 });
+
+//-- github user work ends here --
 
 app.use(express.static(__dirname + '/'));
 

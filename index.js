@@ -1,5 +1,3 @@
-var logged_in = false;
-
 function getQuestions() {
     alert("GETTING");
     fetch("http://localhost:3000/get-questions", {
@@ -11,10 +9,12 @@ function getQuestions() {
             });
 }
 
+//github index.js work (Harrison):
 //load function: loads when the HTML document is ready. 
 //Used as a login check for now: if there is information stored
 //about the user set their github profile picture and the logout endpoint,
 //if not set a default avatar and the login endpoint.
+var logged_in = false;
 $(document).ready(function() {
     fetch("http://localhost:3000/user", {
         method: 'GET'
@@ -38,6 +38,4 @@ $(document).ready(function() {
         }
     })
 });
-
-
-$()
+//end of github index js work
