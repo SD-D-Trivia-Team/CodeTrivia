@@ -22,6 +22,7 @@ app.use(bodyParser.urlencoded({
 const { MongoClient } = require('mongodb');
 const uri = "mongodb+srv://TriviaUser:TriviaUserPass@cluster0.wn0sd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect();
 
 app.get('/get-questions' , async (req, res) =>{
     try {
@@ -132,6 +133,37 @@ app.get('/user/logout', (req, res) => {
 });
 
 //-- github user work ends here --
+
+
+// -- work on score endpoints in order to test things for the leaderboard functions (Harrison)-- 
+app.get('/scores', async (req, res) => {
+    console.log(`Category is ${req.query.category}`);
+    let scores_ret_list = [];
+    //wait client connection to DB
+    let db = client.db('CodeTrivia');
+    let collection = db.collection('Users');
+    let document = await collection.find();
+
+    //go through the items returned: filter the scores based on what the person
+    //has, and if there is an object within the filtering add it to the return list,
+    //otherwise continue
+    await document.toArray().then((result) =>{
+        for(const elem of result){
+            let scores = elem.scores;
+            var cat_scores = scores.filter(i => {
+                return i.category == req.query.category;
+            });
+            if(cat_scores[0] != null){
+                console.log(cat_scores[0]);
+                scores_ret_list.push({name:elem.username, score:cat_scores[0]['score']});
+            }
+        }
+    });
+
+    res.send(scores_ret_list);   
+
+});
+//-- score endpoints end here -- 
 
 app.use(express.static(__dirname + '/'));
 
