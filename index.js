@@ -9,6 +9,16 @@ function getQuestions() {
             });
 }
 
+/*Function to just store category for now*/
+function storeCategory(category_short, category_long){
+    sessionStorage.setItem('cat_tag', category_short);
+    sessionStorage.setItem('cat_full', category_long)
+}
+
+function goToLeaderboard(){
+    window.location.replace('http://localhost:3000/Leaderboard/index.html')
+}
+
 //github index.js work (Harrison):
 //load function: loads when the HTML document is ready. 
 //Used as a login check for now: if there is information stored

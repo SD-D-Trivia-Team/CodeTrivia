@@ -1,3 +1,32 @@
+/*A score class: Class mainly consists of one constructor function and then several different get/set methods*/
+class Score {
+    constructor(name, cat, val){
+        this.username = name;
+        this.category = cat;
+        this.score = val;
+    }
+
+    get getScore(){
+        var score_val = this.score;
+        return score_val;
+    }
+
+    set setScore(value){
+        this.score = value;
+        return;
+    }
+
+    get getName(){
+        var name_val = this.username;
+        return name_val;
+    }
+
+    set setName(value){
+        this.username = value;
+        return; 
+    }
+}
+
 class Leaderboard {
 
     constructor(cat){
@@ -9,6 +38,11 @@ class Leaderboard {
     //preconditions: Category has to be defined/one of the defined categories with a leaderboard button
     //postconditions: Client is served a view of the scores for the selected category
     viewLeaderboard(){
+
+        $("#leaderboard-header").html(`<h3 id="cat-header">${sessionStorage.getItem('cat_full')} Quiz</h3>
+        <h4>Leaderboard - October 27, 2021</h4>`)
+        //set the value of the leaderboard to the specific category and date of the day
+        //go through and add in the elements of the leaderboard
         var init_score = true;
         this.scores = [];
         //fetch the data from the server side
@@ -57,34 +91,6 @@ class Leaderboard {
     }
 
 }
-/*A score class: Class mainly consists of one constructor function and then several different get/set methods*/
-class Score {
-    constructor(name, cat, val){
-        this.username = name;
-        this.category = cat;
-        this.score = val;
-    }
-
-    get getScore(){
-        var score_val = this.score;
-        return score_val;
-    }
-
-    set setScore(value){
-        this.score = value;
-        return;
-    }
-
-    get getName(){
-        var name_val = this.username;
-        return name_val;
-    }
-
-    set setName(value){
-        this.username = value;
-        return; 
-    }
-}
 
 /*A simple user class:*/
 class User {
@@ -103,6 +109,7 @@ class User {
 $(document).ready(function() {
     //on load, create a new Leaderboard object for the category and then
     //set the viewLeaderboard method into motion
-    var currentLeaderboard = new Leaderboard("Javascript");
+    console.log(sessionStorage.getItem('cat_tag'));
+    var currentLeaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
     currentLeaderboard.viewLeaderboard();
 });
