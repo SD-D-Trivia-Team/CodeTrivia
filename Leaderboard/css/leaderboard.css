@@ -30,6 +30,10 @@
     margin:auto;
 }
 
+#leaderboard-container{
+    text-align:center;
+}
+
 #top-leaderboard-entry{
     border-top:2px solid grey;
 }

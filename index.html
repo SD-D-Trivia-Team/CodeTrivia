@@ -40,8 +40,8 @@
            that conforms to the ECMAScript specification. JavaScript is used for websites.
         </section>
 
-        <button type="button" onclick="getQuestions()" class="btn btn-success tq-button">Take Quiz</button>
-        <button type="button" class="btn btn-success lb-button">Leaderboards</button>
+        <button type="button" onclick="storeCategory('js', 'JavaScript'); getQuestions();" class="btn btn-success tq-button">Take Quiz</button>
+        <button type="button" onclick="storeCategory('js', 'JavaScript'); goToLeaderboard();"class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
 
@@ -61,7 +61,7 @@
         </section>
 
         <button type="button" class="btn btn-success tq-button">Take Quiz</button>
-        <button type="button" class="btn btn-success lb-button">Leaderboards</button>
+        <button type="button"  onclick="storeCategory('cpp', 'C++'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
 
@@ -81,7 +81,7 @@
         </section>
 
         <button type="button" class="btn btn-success tq-button">Take Quiz</button>
-        <button type="button" class="btn btn-success lb-button">Leaderboards</button>
+        <button type="button" onclick="storeCategory('py', 'Python'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
 
@@ -101,7 +101,7 @@
         </section>
 
         <button type="button" class="btn btn-success tq-button">Take Quiz</button>
-        <button type="button" class="btn btn-success lb-button">Leaderboards</button>
+        <button type="button" onclick="storeCategory('java', 'Java'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
 
