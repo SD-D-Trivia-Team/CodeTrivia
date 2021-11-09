@@ -39,7 +39,6 @@ class Leaderboard {
     //preconditions: Category has to be defined/one of the defined categories with a leaderboard button
     //postconditions: Client is served a view of the scores for the selected category
     viewLeaderboard(){
-
         $("#leaderboard-header").html(`<h3 id="cat-header">${sessionStorage.getItem('cat_full')} Quiz</h3>
         <h4>Leaderboard - ${this.date.toLocaleDateString('en-US')}</h4>`)
         //set the value of the leaderboard to the specific category and date of the day
@@ -56,7 +55,6 @@ class Leaderboard {
             var leaderboard_ind = 1;
             //Then, go through and append the individual elements using jquery's .append and .html methods
             for(const elem of data){
-                console.log(elem);
                 let scoreObj = new Score(elem.name, this.category, elem.score);
                 this.scores.push(scoreObj);
                 if(init_score){
@@ -99,7 +97,6 @@ class Leaderboard {
 $(document).ready(function() {
     //on load, create a new Leaderboard object for the category and then
     //set the viewLeaderboard method into motion
-    console.log(sessionStorage.getItem('cat_tag'));
     var currentLeaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
     currentLeaderboard.viewLeaderboard();
 });

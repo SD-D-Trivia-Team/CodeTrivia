@@ -137,7 +137,6 @@ app.get('/user/logout', (req, res) => {
 
 // -- work on score endpoints in order to test things for the leaderboard functions (Harrison)-- 
 app.get('/scores', async (req, res) => {
-    console.log(`Category is ${req.query.category}`);
     let scores_ret_list = [];
     //wait client connection to DB
     let db = client.db('CodeTrivia');
@@ -154,7 +153,6 @@ app.get('/scores', async (req, res) => {
                 return i.category == req.query.category;
             });
             if(cat_scores[0] != null){
-                console.log(cat_scores[0]);
                 scores_ret_list.push({name:elem.username, score:cat_scores[0]['score']});
             }
         }
