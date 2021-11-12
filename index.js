@@ -32,7 +32,8 @@ $(document).ready(function() {
     .then(response => response.json()
     ).then(data => {
         console.log(data);
-        if (data.userName != ''){
+        if (data.userName != '' && typeof data.userName != 'undefined'){
+            console.log(data.userName);
             console.log('logged in');
             $("#profile-image-header").attr("src", `http://github.com/${data.userName}.png`);
             $("#log-text").html("Log Out");

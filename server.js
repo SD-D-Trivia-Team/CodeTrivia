@@ -123,13 +123,13 @@ app.get('/user/login/callbackfunc', async (req,res) => {
     var user_obj = await performUserLookup(access_obj.access_token);
 
     //redirect back to the home/about/whatever page is decided
-    res.redirect('http://localhost:3000/about');
+    res.redirect('http://localhost:3000/');
 });
 
 //sets server user information back to defaults
 app.get('/user/logout', (req, res) => {
     setUser('','');
-    res.redirect('http://localhost:3000/about');
+    res.redirect('http://localhost:3000/');
 });
 
 //-- github user work ends here --
