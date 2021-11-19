@@ -47,10 +47,10 @@ $(document).ready(function() {
     .then(response => response.json()
     ).then(data => {
         console.log(data);
-        if (data.userName != '' && typeof data.userName != 'undefined'){
-            console.log(data.userName);
+        if (data.username != '' && typeof data.username != 'undefined'){
+            console.log(data.username);
             console.log('logged in');
-            $("#profile-image-header").attr("src", `http://github.com/${data.userName}.png`);
+            $("#profile-image-header").attr("src", `http://github.com/${data.username}.png`);
             $("#log-text").html("Log Out");
             $("#log-text").attr("href", `http://localhost:3000/user/logout`);
             logged_in = true;

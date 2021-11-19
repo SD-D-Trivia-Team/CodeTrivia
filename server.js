@@ -8,11 +8,11 @@ const app = express();
 const port = 3000;
 
 //variables for use with user/GitHub
-const clientID = 'PUT-CLIENT-ID-HERE';
-const clientSecret = 'PUT-CLIENT-SECRET-HERE';
+const client_id = 'PUT-CLIENT-ID-HERE';
+const client_secret = 'PUT-CLIENT-SECRET-HERE';
 const user = {
-    userName: '',
-    userId: ''
+    username: '',
+    user_id: ''
 };
 
 //express setup
@@ -73,8 +73,8 @@ precondition: none/values must be valid representations of a GitHub username/id
 postcondition: none
 */
 async function setUser(name_value, id_value){
-    user.userName = name_value;
-    user.userId =id_value;
+    user.username = name_value;
+    user.user_id =id_value;
     return;
 }
 
@@ -85,8 +85,8 @@ postcondition: return access token to get user information
 */
 async function performUserCallbackFunction(codeName){
     const body = {
-        client_id: clientID,
-        client_secret: clientSecret,
+        client_id: client_id,
+        client_secret: client_secret,
         code: codeName
     };
     token_val = '';
@@ -108,7 +108,7 @@ async function performUserCallbackFunction(codeName){
 /*
 performUserLookup()
 precondition: access token from GitHub has been acquired
-postcondition: the user's username and id are acquired and are returned
+postcondition: the user's username and id are acquired and are returned from API
 */
 async function performUserLookup(user_token){
     const response = await fetch(`https://api.github.com/user`,  {
@@ -132,14 +132,14 @@ app.get('/user', (req, res) => {
 /*
 login endpoint
 precondition: server is listening 
-postcondition: user is sent to github authorization
+postcondition: user is sent to GitHub authorization
 */
 app.get('/user/login', (req, res) => {
-    res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientID}`);
+    res.redirect(`https://github.com/login/oauth/authorize?client_id=${client_id}`);
 });
 
 /*
-callback function endpoint for github OAuth
+callback function endpoint for GitHub OAuth
 precondition: user authorizes GitHub to use account, server is listening
 postcondition: user is logged in/has information stored on server
 */
@@ -170,7 +170,7 @@ app.get('/scores', async (req, res) => {
     let db = client.db('CodeTrivia');
     let collection = db.collection('Users');
     let document = await collection.find();
-
+    //filter scores by category
     await document.toArray().then((result) =>{
         for(const elem of result){
             let scores = elem.scores;
