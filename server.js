@@ -60,7 +60,7 @@ app.get('/get-questions' , async (req, res) =>{
 /*
 getUser()
 precondition: none
-postcondition: return the user's login and id
+postcondition: return user's username and id
 */
 function getUser(){
     return user;
@@ -70,7 +70,7 @@ function getUser(){
 setUser()
 set a user's information
 precondition: none/values must be valid representations of a GitHub username/id
-postcondition: none
+postcondition: set user's username and id, return
 */
 async function setUser(name_value, id_value){
     user.username = name_value;
@@ -187,6 +187,7 @@ app.get('/scores', async (req, res) => {
 
 });
 
+//have server listen on the port 3000
 app.use(express.static(__dirname + '/'));
 
 app.listen(port, () => {
