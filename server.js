@@ -68,7 +68,6 @@ function getUser(){
 
 /*
 setUser()
-set a user's information
 precondition: none/values must be valid representations of a GitHub username/id
 postcondition: set user's username and id, return
 */
