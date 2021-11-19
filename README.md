@@ -1,5 +1,3 @@
-![image](./images/Logo.png)
-
 # Codetrivia Development Project
 
 ## Developers
