@@ -1,3 +1,8 @@
+/* 
+getQuestions()
+precondition: none
+postcondition: perform get request to server for questions, log in console
+*/
 function getQuestions() {
     alert("GETTING");
     fetch("http://localhost:3000/get-questions", {
@@ -9,21 +14,31 @@ function getQuestions() {
             });
 }
 
-/*Function to just store category for now*/
+/*
+storeCategory()
+precondition: none
+postcondition: category both in its database tag form and full name are stored
+*/
 function storeCategory(category_short, category_long){
     sessionStorage.setItem('cat_tag', category_short);
     sessionStorage.setItem('cat_full', category_long)
 }
 
+/*
+goToLeaderboard()
+precondition: none
+postcondition: user is redirected to leaderboard html page
+*/
 function goToLeaderboard(){
     window.location.replace('http://localhost:3000/Leaderboard/index.html')
 }
 
-//github index.js work (Harrison):
-//load function: loads when the HTML document is ready. 
-//Used as a login check for now: if there is information stored
-//about the user set their github profile picture and the logout endpoint,
-//if not set a default avatar and the login endpoint.
+/*
+document.ready() function
+precondition: page is loaded (document.ready does this)
+postcondition: user has the appropriate information depending if they are
+logged in/out. Add other functionalities as needed.
+*/
 var logged_in = false;
 $(document).ready(function() {
     fetch("http://localhost:3000/user", {
@@ -32,10 +47,10 @@ $(document).ready(function() {
     .then(response => response.json()
     ).then(data => {
         console.log(data);
-        if (data.userName != '' && typeof data.userName != 'undefined'){
-            console.log(data.userName);
+        if (data.username != '' && typeof data.username != 'undefined'){
+            console.log(data.username);
             console.log('logged in');
-            $("#profile-image-header").attr("src", `http://github.com/${data.userName}.png`);
+            $("#profile-image-header").attr("src", `http://github.com/${data.username}.png`);
             $("#log-text").html("Log Out");
             $("#log-text").attr("href", `http://localhost:3000/user/logout`);
             logged_in = true;
@@ -49,4 +64,3 @@ $(document).ready(function() {
         }
     })
 });
-//end of github index js work
