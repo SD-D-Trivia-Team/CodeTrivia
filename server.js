@@ -73,20 +73,20 @@ postcondition: set user's username and id, return
 */
 async function setUser(name_value, id_value){
     user.username = name_value;
-    user.user_id =id_value;
+    user.user_id = id_value;
     return;
 }
 
 /*
-performUserCallbackFunction()
+performUserCallbackFunction(codeName)
 precondition: code from Github authorization has been acquired.
 postcondition: return access token to get user information
 */
-async function performUserCallbackFunction(codeName){
+async function performUserCallbackFunction(code_name){
     const body = {
         client_id: client_id,
         client_secret: client_secret,
-        code: codeName
+        code: code_name
     };
     token_val = '';
 
@@ -105,7 +105,7 @@ async function performUserCallbackFunction(codeName){
 }
 
 /*
-performUserLookup()
+performUserLookup(user_token)
 precondition: access token from GitHub has been acquired
 postcondition: the user's username and id are acquired and are returned from API
 */
