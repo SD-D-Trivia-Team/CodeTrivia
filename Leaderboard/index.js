@@ -62,19 +62,24 @@ class Leaderboard {
     viewLeaderboard(){
 
         $("#leaderboard-header").html(`<h3 id="cat-header">${sessionStorage.getItem('cat_full')} Quiz</h3>
-        <h4>Leaderboard - ${this.date.toLocaleDateString('en-US')}</h4>`)
+        <h4>Leaderboard - ${this.date.toLocaleDateString('en-US')}</h4>`);
         var init_score = true;
         this.scores = [];
+        
         //fetch the data from the server side
         fetch(`http://localhost:3000/scores?category=${this.category}`, {
             method: 'GET'
         }).then(response => response.json())
           .then(data => {
+
             data.sort((first_item, second_item) => second_item.score - first_item.score);
             var leaderboard_ind = 1;
+
             for(const elem of data){
+
                 let score_obj = new Score(elem.name, this.category, elem.score);
                 this.scores.push(score_obj);
+
                 //top score
                 if(init_score){
                     let score_str = elem.score.toLocaleString('en-US');
@@ -89,6 +94,7 @@ class Leaderboard {
                     init_score = false;
                     leaderboard_ind = leaderboard_ind + 1;
                 }
+
                 //bottom scores
                 else{
                     let score_str = elem.score.toLocaleString('en-US');
