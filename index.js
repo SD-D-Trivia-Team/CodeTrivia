@@ -14,11 +14,6 @@ function getQuestions() {
             });
 }
 
-/*
-storeCategory()
-precondition: none
-postcondition: category both in its database tag form and full name are stored
-*/
 function storeCategory(category_short, category_long){
     sessionStorage.setItem('cat_tag', category_short);
     sessionStorage.setItem('cat_full', category_long)
