@@ -8,10 +8,10 @@ const app = express();
 const port = 3000;
 
 //variables for use with user/GitHub
-const client_id = 'PUT-CLIENT-ID-HERE';
-const client_secret = 'PUT-CLIENT-SECRET-HERE';
-// const clientID = '7cb697c561a995d7c9f7';
-// const clientSecret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+//const client_id = 'PUT-CLIENT-ID-HERE';
+//const client_secret = 'PUT-CLIENT-SECRET-HERE';
+const client_id = '7cb697c561a995d7c9f7';
+const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
 const user = {
     username: '',
     user_id: ''
@@ -117,7 +117,7 @@ async function performUserLookup(user_token){
     });
     const user_json = await response.json();
     const set = await setUser(user_json.login, user_json.id);
-    return user_json.login;
+    return;
 }
 
 /*
@@ -146,6 +146,25 @@ postcondition: user is logged in/has information stored on server
 app.get('/user/login/callbackfunc', async (req,res) => {
     var access_obj = await performUserCallbackFunction(req.query.code);
     var user_obj = await performUserLookup(access_obj.access_token);
+    let user_json = getUser();
+    //database lookup/insertion
+    let db = client.db('CodeTrivia');
+    let collection = db.collection('Users');
+    var query = { "username": user_json.username, "id": user_json.user_id};
+    await collection.find(query).toArray().then(user_val => {
+        //if there is no user in the system for that username, then add one
+        console.log(user_val);
+        if(!user_val.length){
+            const user_structure = {
+                username: user_json.username,
+                id: user_json.user_id,
+                scores: []
+            };
+            collection.insertOne(user_structure);
+            console.log("Inserted a new user into the database");
+        }
+    });
+
     res.redirect('http://localhost:3000/');
 });
 
