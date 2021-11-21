@@ -206,6 +206,71 @@ app.get('/scores', async (req, res) => {
 
 });
 
+/*
+updateScore endpoint
+precondition: req body contains a score, category, and user for the score
+postcondition: correct user has score updated/inserted into their score
+*/
+app.post('/scores/updateScore', async (req, res) => {
+
+
+    if(req.body.username == ''){
+        return res.send({status: 'empty', message: 'user does not exist in database, cannot add score.'});
+    }
+
+    var username = req.body.username;
+
+    if(!req.body.category){
+        return res.send({status: 'cat_empty', message: 'category is empty and as such score cannot be added.'});
+    }
+    
+    var query = { "username": username };
+    let db = client.db('CodeTrivia');
+    let collection = db.collection('Users');
+
+
+    var score_in_cat = false;
+    await collection.findOne(query).then(response => {
+            console.log(response);
+            for (item of response.scores){
+                if(response.category = req.body.category){
+                    score_in_cat = true;
+                }
+            }
+        }
+    );
+
+    if(score_in_cat){   
+        query = { "username": username, "scores.category": req.body.category};
+        try{
+            await collection.updateOne(query, 
+                {$set: 
+                    {"scores.$.score": req.body.score } 
+                }, {upsert: true});
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    
+    else{
+        try{
+            await collection.updateOne(query, 
+                {$addToSet: 
+                    {"scores": 
+                        {"category": req.body.category, "score": req.body.score}
+                    } 
+                }, {upsert: true});
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    return res.send({status:'success', message: 'user score successfully put in'});
+
+});
+
 //have server listen on the port 3000
 app.use(express.static(__dirname + '/'));
 
