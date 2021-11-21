@@ -8,10 +8,10 @@ const app = express();
 const port = 3000;
 
 //variables for use with user/GitHub
-//const client_id = 'PUT-CLIENT-ID-HERE';
-//const client_secret = 'PUT-CLIENT-SECRET-HERE';
-const client_id = '7cb697c561a995d7c9f7';
-const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+const client_id = 'PUT-CLIENT-ID-HERE';
+const client_secret = 'PUT-CLIENT-SECRET-HERE';
+//const client_id = '7cb697c561a995d7c9f7';
+//const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
 const user = {
     username: '',
     user_id: ''
