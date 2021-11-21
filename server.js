@@ -213,15 +213,14 @@ postcondition: correct user has score updated/inserted into their score
 */
 app.post('/scores/updateScore', async (req, res) => {
 
-
     if(req.body.username == ''){
         return res.send({status: 'empty', message: 'user does not exist in database, cannot add score.'});
     }
 
     var username = req.body.username;
 
-    if(!req.body.category){
-        return res.send({status: 'cat_empty', message: 'category is empty and as such score cannot be added.'});
+    if(!req.body.category || !req.body.score){
+        return res.send({status: 'score_empty', message: 'category or score for category is empty and as such score cannot be added.'});
     }
     
     var query = { "username": username };
@@ -231,9 +230,8 @@ app.post('/scores/updateScore', async (req, res) => {
 
     var score_in_cat = false;
     await collection.findOne(query).then(response => {
-            console.log(response);
             for (item of response.scores){
-                if(response.category = req.body.category){
+                if(item.category == req.body.category){
                     score_in_cat = true;
                 }
             }
