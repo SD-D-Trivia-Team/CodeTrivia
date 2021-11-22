@@ -12,6 +12,7 @@ const port = 3000;
 // const client_secret = 'PUT-CLIENT-SECRET-HERE';
 const client_id = '7cb697c561a995d7c9f7';
 const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+
 const user = {
     username: '',
     user_id: ''
@@ -122,7 +123,7 @@ async function performUserLookup(user_token){
     });
     const user_json = await response.json();
     const set = await setUser(user_json.login, user_json.id);
-    return user_json.login;
+    return;
 }
 
 /*
@@ -151,6 +152,25 @@ postcondition: user is logged in/has information stored on server
 app.get('/user/login/callbackfunc', async (req,res) => {
     var access_obj = await performUserCallbackFunction(req.query.code);
     var user_obj = await performUserLookup(access_obj.access_token);
+    let user_json = getUser();
+    //database lookup/insertion
+    let db = client.db('CodeTrivia');
+    let collection = db.collection('Users');
+    var query = { "username": user_json.username, "id": user_json.user_id};
+    await collection.find(query).toArray().then(user_val => {
+        //if there is no user in the system for that username, then add one
+        console.log(user_val);
+        if(!user_val.length){
+            const user_structure = {
+                username: user_json.username,
+                id: user_json.user_id,
+                scores: []
+            };
+            collection.insertOne(user_structure);
+            console.log("Inserted a new user into the database");
+        }
+    });
+
     res.redirect('http://localhost:3000/');
 });
 
@@ -189,6 +209,69 @@ app.get('/scores', async (req, res) => {
     });
 
     res.send(scores_ret_list);   
+
+});
+
+/*
+updateScore endpoint
+precondition: req body contains a score, category, and user for the score
+postcondition: correct user has score updated/inserted into their score
+*/
+app.post('/scores/updateScore', async (req, res) => {
+
+    if(req.body.username == ''){
+        return res.send({status: 'empty', message: 'user does not exist in database, cannot add score.'});
+    }
+
+    var username = req.body.username;
+
+    if(!req.body.category || !req.body.score){
+        return res.send({status: 'score_empty', message: 'category or score for category is empty and as such score cannot be added.'});
+    }
+    
+    var query = { "username": username };
+    let db = client.db('CodeTrivia');
+    let collection = db.collection('Users');
+
+
+    var score_in_cat = false;
+    await collection.findOne(query).then(response => {
+            for (item of response.scores){
+                if(item.category == req.body.category){
+                    score_in_cat = true;
+                }
+            }
+        }
+    );
+
+    if(score_in_cat){   
+        query = { "username": username, "scores.category": req.body.category};
+        try{
+            await collection.updateOne(query, 
+                {$set: 
+                    {"scores.$.score": req.body.score } 
+                }, {upsert: true});
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    
+    else{
+        try{
+            await collection.updateOne(query, 
+                {$addToSet: 
+                    {"scores": 
+                        {"category": req.body.category, "score": req.body.score}
+                    } 
+                }, {upsert: true});
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+
+    return res.send({status:'success', message: 'user score successfully put in'});
 
 });
 
