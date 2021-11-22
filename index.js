@@ -3,16 +3,16 @@ getQuestions()
 precondition: none
 postcondition: perform get request to server for questions, log in console
 */
-function getQuestions() {
-    alert("GETTING");
-    fetch("http://localhost:3000/get-questions", {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-            });
-}
+// function getQuestions() {
+//     alert("GETTING");
+//     fetch("http://localhost:3000/get-questions", {
+//             method: 'GET'
+//         })
+//             .then(response => response.json())
+//             .then(data => {
+//                 console.log(data);
+//             });
+// }
 
 function storeCategory(category_short, category_long){
     sessionStorage.setItem('cat_tag', category_short);

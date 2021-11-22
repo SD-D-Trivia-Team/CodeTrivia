@@ -76,3 +76,12 @@ body {
     margin: 1% 0 4% 8%;
     background-color: #2f5b39;
 }
+
+.takequiz {
+    color: #ffffff;
+}
+
+.takequiz:hover {
+    color: #ffffff;
+    text-decoration: none;
+}

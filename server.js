@@ -8,10 +8,11 @@ const app = express();
 const port = 3000;
 
 //variables for use with user/GitHub
-const client_id = 'PUT-CLIENT-ID-HERE';
-const client_secret = 'PUT-CLIENT-SECRET-HERE';
-//const client_id = '7cb697c561a995d7c9f7';
-//const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+// const client_id = 'PUT-CLIENT-ID-HERE';
+// const client_secret = 'PUT-CLIENT-SECRET-HERE';
+const client_id = '7cb697c561a995d7c9f7';
+const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+
 const user = {
     username: '',
     user_id: ''
@@ -36,14 +37,19 @@ question endpoint
 precondition: server must be listening/active
 postcondition: currently, return a list of question objects from mongoDB
 */
-app.get('/get-questions' , async (req, res) =>{
+app.get('/get-questions/:category' , async (req, res) =>{
+
+    let category = req.params.category;
+    console.log(category);
+
     try {
         console.log("connecting to db to get plants");
         
         
         let db = client.db('CodeTrivia');
         let collection = db.collection('test');
-        let document = await collection.aggregate([{$sample: {size: 10}}]);
+        let document = await collection.find({category: category});
+        // let document = await collection.aggregate([{$sample: {size: 10}}]);
         let items = await document.toArray();
   
         console.log(items);
@@ -273,7 +279,7 @@ app.post('/scores/updateScore', async (req, res) => {
 app.use(express.static(__dirname + '/'));
 
 app.listen(port, () => {
-    console.log('Listening on *: 3000');
+    console.log(`Listening on *: ${port}`);
 })
 
 client.close();

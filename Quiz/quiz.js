@@ -136,7 +136,11 @@ function verifyAnswer(index, points){
 }
 
 function getQuestions() {
-    fetch("http://localhost:3000/get-questions", {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    let category = urlParams.get("category");
+
+    fetch("http://localhost:3000/get-questions/" + category, {
             method: 'GET'
         })
         .then(response => response.json())
