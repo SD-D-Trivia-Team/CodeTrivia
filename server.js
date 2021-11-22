@@ -43,14 +43,13 @@ app.get('/get-questions/:category' , async (req, res) =>{
     console.log(category);
 
     try {
-        console.log("connecting to db to get plants");
-        
         
         let db = client.db('CodeTrivia');
         let collection = db.collection('test');
         let document = await collection.find({category: category});
         // let document = await collection.aggregate([{$sample: {size: 10}}]);
         let items = await document.toArray();
+        items = items.slice(0, 10);
   
         console.log(items);
         res.send(items);
