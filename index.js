@@ -25,7 +25,11 @@ precondition: none
 postcondition: user is redirected to leaderboard html page
 */
 function goToLeaderboard(){
-    window.location.replace('http://localhost:3000/Leaderboard/index.html')
+    window.location = ('http://localhost:3000/Leaderboard/index.html');
+}
+
+function goToQuiz(){
+    window.location = ('http://localhost:3000/Quiz/quiz.html')
 }
 
 /*

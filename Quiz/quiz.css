@@ -41,6 +41,10 @@ body {
     background-color: #54c96e;
 }
 
+.col-sm-12{
+    margin-top:20px;
+    text-align:center;
+}
 .questiontext {
 
     /* padding-top: vh; */

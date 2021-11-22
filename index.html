@@ -59,8 +59,8 @@
         </section>
         
         
-        <button type="submit" onclick="storeCategory('js', 'JavaScript'); getQuestions();" class="btn btn-success tq-button">
-          <a class="takequiz" href="Quiz/quiz.html?category=javascript">Quiz Test</a>
+        <button type="submit" onclick="storeCategory('js', 'JavaScript'); goToQuiz();" class="btn btn-success tq-button">
+          <a class="takequiz" href="Quiz/quiz.html?category=javascript">Take Quiz</a>
         </button>
         <button type="button" onclick="storeCategory('js', 'JavaScript'); goToLeaderboard();"class="btn btn-success lb-button">Leaderboards</button>
 
@@ -81,7 +81,9 @@
            that conforms to the ECMAScript specification. JavaScript is used for websites.
         </section>
 
-        <button type="button" class="btn btn-success tq-button">Take Quiz</button>
+        <button type="button" onclick="storeCategory('cpp', 'C++'); goToQuiz();"class="btn btn-success tq-button">
+          <a class="takequiz" href="Quiz/quiz.html?category=cpp">Take Quiz</a>
+        </button>
         <button type="button"  onclick="storeCategory('cpp', 'C++'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
@@ -101,8 +103,10 @@
            that conforms to the ECMAScript specification. JavaScript is used for websites.
         </section>
 
-        <button type="button" class="btn btn-success tq-button">Take Quiz</button>
-        <button type="button" onclick="storeCategory('py', 'Python'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
+        <button type="button" onclick="storeCategory('python', 'Python'); goToQuiz();" class="btn btn-success tq-button">
+          <a class="takequiz" href="Quiz/quiz.html?category=python">Take Quiz</a>
+        </button>
+        <button type="button" onclick="storeCategory('python', 'Python'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>
 
@@ -121,7 +125,9 @@
            that conforms to the ECMAScript specification. JavaScript is used for websites.
         </section>
 
-        <button type="button" class="btn btn-success tq-button">Take Quiz</button>
+        <button type="button" onclick="storeCategory('java', 'Java'); goToQuiz();" class="btn btn-success tq-button">
+          <a class="takequiz" href="Quiz/quiz.html?category=java">Take Quiz</a>
+        </button>
         <button type="button" onclick="storeCategory('java', 'Java'); goToLeaderboard();" class="btn btn-success lb-button">Leaderboards</button>
 
       </div>

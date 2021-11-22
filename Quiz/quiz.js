@@ -2,6 +2,7 @@ let questionnumber = 0;
 let correct_answer = -1;
 let points = 0;
 let qdata;
+let userdata;
 let currentscore = 0;
 
 function shuffle(array) {
@@ -10,11 +11,39 @@ function shuffle(array) {
 
 $(document).ready(function() {
     console.log('ready');
-    getQuestions();
+    fetch("http://localhost:3000/user", {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            userdata = data;
+            getQuestions();
+    });
 });
 
 
 function populate(){
+
+    if(qdata.length == questionnumber){
+        quizEndPopulate();
+        let scoreobj = {
+            username: userdata.username,
+            category: sessionStorage.getItem('cat_tag'),
+            score: currentscore
+        };
+
+        fetch("http://localhost:3000/scores/updateScore", {
+                method: 'POST',
+                body: JSON.stringify(scoreobj),
+                headers: {"Content-Type": "application/json"}
+            })
+            .then(response => console.log(response));
+
+        setTimeout(() => { document.body.style.backgroundColor = "#1F2521";}, 1000);
+        setTimeout(() => {window.location.replace('http://localhost:3000/Leaderboard/index.html');}, 3000);
+        return;
+    }
+
     let questionContainer = document.getElementById("container");
     questionContainer.style.opacity = "1";
     questionContainer.innerHTML = '';
@@ -54,7 +83,7 @@ function populate(){
           // code block
       }
 
-    let html = ` <h4> Question n: ${questionnumber + 1 } <br> ${points} </h4>
+    let html = ` <h4> Question number: ${questionnumber + 1 } <br> ${points} points</h4>
 
     <section class="questioncontainer">
       ${qdata[questionnumber]['question']}
@@ -73,11 +102,17 @@ function populate(){
         <section class="questiontext">
         ${qdata[questionnumber]['answers'][1]}
         </section>
-        </div>
-    
-        </div>
-        <h2 class="text-center"> <img src="/images/default_avatar.png" width="40" height="40"> Username:  ${currentscore}</h2>
-        </div>`
+        </div>`;
+        if(userdata.username != '' && userdata.username != undefined){
+            html += `</div>
+            <h2 class="text-center"> <img src="http://github.com/${userdata.username}.png" width="40" height="40" class="rounded-circle">  ${userdata.username}:  ${currentscore}</h2>
+            </div>`;
+        }
+        else{
+            html += `</div>
+            <h2 class="text-center"> <img src="/images/default_avatar.png" width="40" height="40" class="rounded-circle"> Guest:  ${currentscore}</h2>
+            </div>`;
+        }
     }
     else{
         html += `<div id = "questions">
@@ -108,13 +143,33 @@ function populate(){
             </section>
             </div>
             </div>
-            </div>
+            </div>`;
 
-            <div>
-            <h2 class="text-center"> <img src="/images/default_avatar.png" width="40" height="40"> Username:  ${currentscore}</h2>
-            </div>`
+            if(userdata.username != '' && userdata.username != undefined){
+                html += `</div>
+                <h2 class="text-center"> <img src="http://github.com/${userdata.username}.png" width="40" height="40" class="rounded-circle">  ${userdata.username}:  ${currentscore}</h2>
+                </div>`;
+            }
+            else{
+                html += `</div>
+                <h2 class="text-center"> <img src="/images/default_avatar.png" width="40" height="40" class="rounded-circle"> Guest:  ${currentscore}</h2>
+                </div>`;
+            }
     }
     questionContainer.innerHTML = html;
+}
+
+function quizEndPopulate(){
+    let questionContainer = document.getElementById("container");
+    let html = `<div class="row">
+        <div class="col-sm-12">
+            <h2>Quiz ended</h2>
+            <h3>Score: ${currentscore}</h3>
+            <h3>Redirecting to leaderboard for category...</h3>
+        </div>
+    </div>`;
+    questionContainer.innerHTML = html;
+    return;
 }
 
 function verifyAnswer(index, points){
@@ -126,13 +181,27 @@ function verifyAnswer(index, points){
         currentscore += points;
         questionnumber++;
         populate();
-        return
+        return;
     }
     document.body.style.backgroundColor = "#B80034";
-    setTimeout(() => { document.body.style.backgroundColor = "#1F2521"; }, 1000);
-    questionnumber++;
-    populate();
-    return
+    quizEndPopulate();
+    
+    let scoreobj = {
+        username: userdata.username,
+        category: sessionStorage.getItem('cat_tag'),
+        score: currentscore
+    };
+
+    fetch("http://localhost:3000/scores/updateScore", {
+            method: 'POST',
+            body: JSON.stringify(scoreobj),
+            headers: {"Content-Type": "application/json"}
+        })
+        .then(response => console.log(response));
+
+    setTimeout(() => { document.body.style.backgroundColor = "#1F2521";}, 1000);
+    setTimeout(() => {window.location.replace('http://localhost:3000/Leaderboard/index.html');}, 3000);
+    return;
 }
 
 function getQuestions() {

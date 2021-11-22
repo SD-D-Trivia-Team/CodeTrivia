@@ -224,7 +224,7 @@ app.post('/scores/updateScore', async (req, res) => {
 
     var username = req.body.username;
 
-    if(!req.body.category || !req.body.score){
+    if(!req.body.category || req.body.score == undefined){
         return res.send({status: 'score_empty', message: 'category or score for category is empty and as such score cannot be added.'});
     }
     
