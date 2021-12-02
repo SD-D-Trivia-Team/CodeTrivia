@@ -206,7 +206,6 @@ If they get it wrong they have the quiz end.
 function verifyAnswer(index, points){
 
     if(index == correctindex){
-        // alert("CORRECT")
         document.body.style.backgroundColor = "#42d66a";
         setTimeout(() => { document.body.style.backgroundColor = "#1F2521"; }, 1000);
         currentscore += points;
@@ -252,6 +251,5 @@ function getQuestions() {
         .then(data => {
             qdata = data;
             populate(qdata);
-            // console.log(data);
         });
 }

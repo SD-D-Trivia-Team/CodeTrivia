@@ -9,38 +9,38 @@ class Score {
         this.score = val;
     }
     /*
-    getScore()
+    get Score()
     precondition: none
     postcondition: return score value
      */
-    get getScore(){
+    get Score(){
         var score_val = this.score;
         return score_val;
     }
     /*
-    setScore(value)
+    set Score(value)
     precondition: none
     postcondition: set score value
     */
-    set setScore(value){
+    set Score(value){
         this.score = value;
         return;
     }
     /*
-    getName()
+    get Name()
     precondition: none
     postcondition: return username of score
     */
-    get getName(){
+    get Name(){
         var name_val = this.username;
         return name_val;
     }
     /*
-    setName(value)
+    set Name(value)
     precondition:none
     postcondition: set the username of score
     */
-    set setName(value){
+    set Name(value){
         this.username = value;
         return; 
     }
