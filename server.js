@@ -1,11 +1,14 @@
+/*jshint esversion: 8 */
+/*globals require, __dirname*/
+
 //Require statements/variables
 const express = require('express');
 const fetch = require('node-fetch');
 var bodyParser = require('body-parser');
 const cors = require('cors');
-const { json } = require('body-parser');
 const app = express();
 const port = 3000;
+
 
 //variables for use with user/GitHub
 // const client_id = 'PUT-CLIENT-ID-HERE';
@@ -104,7 +107,7 @@ async function performUserCallbackFunction(code_name){
         res.json({
             success: false,
             message: e.message 
-        })
+        });
     });
     const json_obj = await response.json();
     return json_obj;
@@ -150,7 +153,7 @@ postcondition: user is logged in/has information stored on server
 */
 app.get('/user/login/callbackfunc', async (req,res) => {
     var access_obj = await performUserCallbackFunction(req.query.code);
-    var user_obj = await performUserLookup(access_obj.access_token);
+    await performUserLookup(access_obj.access_token);
     let user_json = getUser();
     //database lookup/insertion
     let db = client.db('CodeTrivia');
@@ -202,7 +205,7 @@ app.get('/scores', async (req, res) => {
                 return i.category == req.query.category;
             });
             if(cat_scores[0] != null){
-                scores_ret_list.push({name:elem.username, score:cat_scores[0]['score']});
+                scores_ret_list.push({name:elem.username, score:cat_scores[0].score});
             }
         }
     });
@@ -279,6 +282,6 @@ app.use(express.static(__dirname + '/'));
 
 app.listen(port, () => {
     console.log(`Listening on *: ${port}`);
-})
+});
 
 client.close();
