@@ -1,10 +1,10 @@
 /*jshint esversion: 8 */
-/*globals require, __dirname*/
+/*globals require, res, __dirname*/
 
 //Require statements/variables
 const express = require('express');
 const fetch = require('node-fetch');
-var bodyParser = require('body-parser');
+var body_parser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3000;
@@ -23,8 +23,8 @@ const user = {
 
 //express setup
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(body_parser.json());
+app.use(body_parser.urlencoded({
   extended: true
 }));
 
@@ -63,7 +63,7 @@ app.get('/get-questions/:category' , async (req, res) =>{
             err: 'Cannot get the question data'
         });
     }
-  })
+  });
 
 
 /*
@@ -97,7 +97,6 @@ async function performUserCallbackFunction(code_name){
         client_secret: client_secret,
         code: code_name
     };
-    token_val = '';
 
     const response = await fetch(`https://github.com/login/oauth/access_token?client_id=${body.client_id}&client_secret=${body.client_secret}&code=${body.code}`, {
         method:'POST',
@@ -124,7 +123,7 @@ async function performUserLookup(user_token){
         headers: {Authorization: `token ${user_token}`, accept: 'application/json'}
     });
     const user_json = await response.json();
-    const set = await setUser(user_json.login, user_json.id);
+    await setUser(user_json.login, user_json.id);
     return;
 }
 
@@ -201,8 +200,9 @@ app.get('/scores', async (req, res) => {
     await document.toArray().then((result) =>{
         for(const elem of result){
             let scores = elem.scores;
+            const cat_val = req.query.category;
             var cat_scores = scores.filter(i => {
-                return i.category == req.query.category;
+                return i.category == cat_val;
             });
             if(cat_scores[0] != null){
                 scores_ret_list.push({name:elem.username, score:cat_scores[0].score});
@@ -238,7 +238,7 @@ app.post('/scores/updateScore', async (req, res) => {
 
     var score_in_cat = false;
     await collection.findOne(query).then(response => {
-            for (item of response.scores){
+            for (var item of response.scores){
                 if(item.category == req.body.category){
                     score_in_cat = true;
                 }

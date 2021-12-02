@@ -1,3 +1,6 @@
+/*jshint esversion: 8 */
+/*globals $*/
+
 /*score class*/
 class Score {
     constructor(name, cat, val){
@@ -120,6 +123,6 @@ precondition: page has loaded
 postcondition: new leaderboard is created and adds to page
 */
 $(document).ready(function() {
-    var currentLeaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
-    currentLeaderboard.viewLeaderboard();
+    var current_leaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
+    current_leaderboard.viewLeaderboard();
 });
