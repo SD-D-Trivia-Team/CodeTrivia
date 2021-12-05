@@ -4,7 +4,12 @@
   "description": "quiz for websci",
   "main": "index.js",
   "scripts": {
-    "test": "none"
+    "test": "node server.js",
+    "lint-index": "npx jshint index.js",
+    "lint-server": "npx jshint server.js",
+    "lint-leaderboard": "npx jshint Leaderboard/index.js",
+    "lint-quiz": "npx jshint Quiz/quiz.js",
+    "lint": "npx jshint index.js && npx jshint server.js && npx jshint Leaderboard/index.js && npx jshint Quiz/quiz.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +25,7 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jshint": "^2.13.1",
     "mongodb": "^3.7.3",
     "node-fetch": "^2.6.6"
   }
