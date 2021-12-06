@@ -1,22 +1,15 @@
-/* 
-getQuestions()
-precondition: none
-postcondition: perform get request to server for questions, log in console
-*/
-// function getQuestions() {
-//     alert("GETTING");
-//     fetch("http://localhost:3000/get-questions", {
-//             method: 'GET'
-//         })
-//             .then(response => response.json())
-//             .then(data => {
-//                 console.log(data);
-//             });
-// }
+/*jshint esversion: 8 */
+/*globals $*/
+/*exported storeCategory, goToLeaderboard, goToQuiz*/
 
+/*
+storeCategory(category_short, category_long)
+precondition: user clicked on quiz or leaderboard button which has onClick set
+postcondition: stores the full name and 'tag' name for the selected category
+*/
 function storeCategory(category_short, category_long){
     sessionStorage.setItem('cat_tag', category_short);
-    sessionStorage.setItem('cat_full', category_long)
+    sessionStorage.setItem('cat_full', category_long);
 }
 
 /*
@@ -29,7 +22,7 @@ function goToLeaderboard(){
 }
 
 function goToQuiz(){
-    window.location = ('http://localhost:3000/Quiz/quiz.html')
+    window.location = ('http://localhost:3000/Quiz/quiz.html');
 }
 
 /*
@@ -61,5 +54,5 @@ $(document).ready(function() {
             $("#log-text").attr("href", `http://localhost:3000/user/login`);
             logged_in = false;
         }
-    })
+    });
 });

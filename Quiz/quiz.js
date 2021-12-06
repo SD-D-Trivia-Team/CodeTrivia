@@ -1,14 +1,29 @@
+/*jshint esversion: 8 */
+/*globals $, URLSearchParams*/
+/*exported verifyAnswer*/
+
+//global variables
 let questionnumber = 0;
-let correct_answer = -1;
+let correctindex = -1;
 let points = 0;
 let qdata;
 let userdata;
 let currentscore = 0;
 
+/*
+shuffle()
+precondition:array must contain a set number of questions
+postcondition: choices in the array are randomly sorted
+*/
 function shuffle(array) {
     array.sort(() => Math.random() - 0.5);
-  }
+}
 
+/*
+document.ready function
+precondition: page has loaded
+postcondition: questions for quiz are gotten
+*/
 $(document).ready(function() {
     console.log('ready');
     fetch("http://localhost:3000/user", {
@@ -21,7 +36,11 @@ $(document).ready(function() {
     });
 });
 
-
+/*
+populate()
+precondition: Questions are gotten from getQuestions()
+postcondition: the HTML page is appropriately populated with the question values
+*/
 function populate(){
 
     if(qdata.length == questionnumber){
@@ -48,25 +67,25 @@ function populate(){
     questionContainer.style.opacity = "1";
     questionContainer.innerHTML = '';
 
-    for(question of qdata){
+    for(var question of qdata){
         console.log(question);
     }
 
 
-    shuffle(qdata[questionnumber]['answers']);
+    shuffle(qdata[questionnumber].answers);
 
-    corr = qdata[questionnumber]['correct_answer']
+    let corr = qdata[questionnumber].correct_answer;
 
-    let qamount = qdata[questionnumber]['answers'].length;
+    let qamount = qdata[questionnumber].answers.length;
 
-    for(i = 0; i < qamount ; i++){
-        if(qdata[questionnumber]['answers'][i] == corr){
+    for(var i = 0; i < qamount ; i++){
+        if(qdata[questionnumber].answers[i] == corr){
             correctindex = i;
             console.log(correctindex);
         }
     }
 
-    switch(qdata[questionnumber]['difficulty']) {
+    switch(qdata[questionnumber].difficulty) {
         case 'easy':
           // code block
           points = 10000;
@@ -86,21 +105,21 @@ function populate(){
     let html = ` <h4> Question number: ${questionnumber + 1 } <br> ${points} points</h4>
 
     <section class="questioncontainer">
-      ${qdata[questionnumber]['question']}
-    </section>`
+      ${qdata[questionnumber].question}
+    </section>`;
     
     if (qamount == 2){
         html += `<div id = "questions">
         <div class="row">
         <div onclick="verifyAnswer(0, points)" class="col-sm">
         <section class="questiontext">
-        ${qdata[questionnumber]['answers'][0]}
+        ${qdata[questionnumber].answers[0]}
         </section>
         </div>
     
         <div onclick="verifyAnswer(1, points)" class="col-sm">
         <section class="questiontext">
-        ${qdata[questionnumber]['answers'][1]}
+        ${qdata[questionnumber].answers[1]}
         </section>
         </div>`;
         if(userdata.username != '' && userdata.username != undefined){
@@ -119,13 +138,13 @@ function populate(){
             <div class="row">
             <div onclick="verifyAnswer(0, points)" class="col-sm">
             <section class="questiontext">
-            ${qdata[questionnumber]['answers'][0]}
+            ${qdata[questionnumber].answers[0]}
             </section>
             </div>
 
             <div onclick="verifyAnswer(1, points)" class="col-sm">
             <section class="questiontext">
-            ${qdata[questionnumber]['answers'][1]}
+            ${qdata[questionnumber].answers[1]}
             </section>
             </div>
 
@@ -133,13 +152,13 @@ function populate(){
             <div class="row">
             <div onclick="verifyAnswer(2, points)" class="col-sm">
             <section class="questiontext">
-            ${qdata[questionnumber]['answers'][2]}
+            ${qdata[questionnumber].answers[2]}
             </section>
             </div>
 
             <div onclick="verifyAnswer(3, points)" class="col-sm">
             <section class="questiontext">
-            ${qdata[questionnumber]['answers'][3]}
+            ${qdata[questionnumber].answers[3]}
             </section>
             </div>
             </div>
@@ -159,6 +178,12 @@ function populate(){
     questionContainer.innerHTML = html;
 }
 
+
+/*
+quizEndPopulate()
+precondition: User has put in a wrong question or has answered all questions correctly
+postcondition: HTML page is changed to briefly show the quiz score before redirecting to category
+*/
 function quizEndPopulate(){
     let questionContainer = document.getElementById("container");
     let html = `<div class="row">
@@ -172,10 +197,15 @@ function quizEndPopulate(){
     return;
 }
 
+/*
+verifyAnswer(index, points)
+precondition: index is within the number of choices for the answer
+postcondiion: if user gets the question correct then they get points and are moved to the next question.
+If they get it wrong they have the quiz end.
+*/
 function verifyAnswer(index, points){
 
     if(index == correctindex){
-        // alert("CORRECT")
         document.body.style.backgroundColor = "#42d66a";
         setTimeout(() => { document.body.style.backgroundColor = "#1F2521"; }, 1000);
         currentscore += points;
@@ -204,6 +234,11 @@ function verifyAnswer(index, points){
     return;
 }
 
+/*
+getQuestions()
+precondition: none, page has loaded
+postcondition: the quiz array is appropriately gotten and the first question is populated.
+*/
 function getQuestions() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -216,6 +251,5 @@ function getQuestions() {
         .then(data => {
             qdata = data;
             populate(qdata);
-            // console.log(data);
         });
-};
+}
