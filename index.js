@@ -3,13 +3,13 @@
 /*exported storeCategory, goToLeaderboard, goToQuiz*/
 
 /*
-storeCategory(category_short, category_long)
+storeCategory(categoryShort, categoryLong)
 precondition: user clicked on quiz or leaderboard button which has onClick set
 postcondition: stores the full name and 'tag' name for the selected category
 */
-function storeCategory(category_short, category_long){
-    sessionStorage.setItem('cat_tag', category_short);
-    sessionStorage.setItem('cat_full', category_long);
+function storeCategory(categoryShort, categoryLong){
+    sessionStorage.setItem('cat_tag', categoryShort);
+    sessionStorage.setItem('cat_full', categoryLong);
 }
 
 /*
@@ -31,7 +31,7 @@ precondition: page is loaded (document.ready does this)
 postcondition: user has the appropriate information depending if they are
 logged in/out. Add other functionalities as needed.
 */
-var logged_in = false;
+var loggedIn = false;
 $(document).ready(function() {
     fetch("http://localhost:3000/user", {
         method: 'GET'
@@ -45,14 +45,14 @@ $(document).ready(function() {
             $("#profile-image-header").attr("src", `http://github.com/${data.username}.png`);
             $("#log-text").html("Log Out");
             $("#log-text").attr("href", `http://localhost:3000/user/logout`);
-            logged_in = true;
+            loggedIn = true;
         }
         else {
             console.log('logged out');
             $("#profile-image-header").attr("src", `../images/default_avatar.png`);
             $("#log-text").html("Log In");
             $("#log-text").attr("href", `http://localhost:3000/user/login`);
-            logged_in = false;
+            loggedIn = false;
         }
     });
 });
