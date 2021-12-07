@@ -4,27 +4,27 @@
 //Require statements/variables
 const express = require('express');
 const fetch = require('node-fetch');
-var body_parser = require('body-parser');
+var bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const port = 3000;
 
 
 //variables for use with user/GitHub
-// const client_id = 'PUT-CLIENT-ID-HERE';
-// const client_secret = 'PUT-CLIENT-SECRET-HERE';
-const client_id = '7cb697c561a995d7c9f7';
-const client_secret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
+// const clientId = 'PUT-CLIENT-ID-HERE';
+// const clientSecret = 'PUT-CLIENT-SECRET-HERE';
+const clientId = '7cb697c561a995d7c9f7';
+const clientSecret = 'b017bc8ba12dcc42477de914b7e7b1f288c2e296';
 
 const user = {
     username: '',
-    user_id: ''
+    userId: ''
 };
 
 //express setup
 app.use(cors());
-app.use(body_parser.json());
-app.use(body_parser.urlencoded({
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
   extended: true
 }));
 
@@ -80,9 +80,9 @@ setUser()
 precondition: none/values must be valid representations of a GitHub username/id
 postcondition: set user's username and id, return
 */
-async function setUser(name_value, id_value){
-    user.username = name_value;
-    user.user_id = id_value;
+async function setUser(nameValue, idValue){
+    user.username = nameValue;
+    user.userId = idValue;
     return;
 }
 
@@ -91,14 +91,14 @@ performUserCallbackFunction(codeName)
 precondition: code from Github authorization has been acquired.
 postcondition: return access token to get user information
 */
-async function performUserCallbackFunction(code_name){
+async function performUserCallbackFunction(codeName){
     const body = {
-        client_id: client_id,
-        client_secret: client_secret,
-        code: code_name
+        clientId: clientId,
+        clientSecret: clientSecret,
+        code: codeName
     };
 
-    const response = await fetch(`https://github.com/login/oauth/access_token?client_id=${body.client_id}&client_secret=${body.client_secret}&code=${body.code}`, {
+    const response = await fetch(`https://github.com/login/oauth/access_token?client_id=${body.clientId}&client_secret=${body.clientSecret}&code=${body.code}`, {
         method:'POST',
         headers: {accept: 'application/json'}
     }).catch(e => {
@@ -108,22 +108,22 @@ async function performUserCallbackFunction(code_name){
             message: e.message 
         });
     });
-    const json_obj = await response.json();
-    return json_obj;
+    const jsonObj = await response.json();
+    return jsonObj;
 }
 
 /*
-performUserLookup(user_token)
+performUserLookup(userToken)
 precondition: access token from GitHub has been acquired
 postcondition: the user's username and id are acquired and are returned from API
 */
-async function performUserLookup(user_token){
+async function performUserLookup(userToken){
     const response = await fetch(`https://api.github.com/user`,  {
         method: 'GET',
-        headers: {Authorization: `token ${user_token}`, accept: 'application/json'}
+        headers: {Authorization: `token ${userToken}`, accept: 'application/json'}
     });
-    const user_json = await response.json();
-    await setUser(user_json.login, user_json.id);
+    const userJson = await response.json();
+    await setUser(userJson.login, userJson.id);
     return;
 }
 
@@ -142,7 +142,7 @@ precondition: server is listening
 postcondition: user is sent to GitHub authorization
 */
 app.get('/user/login', (req, res) => {
-    res.redirect(`https://github.com/login/oauth/authorize?client_id=${client_id}`);
+    res.redirect(`https://github.com/login/oauth/authorize?client_id=${clientId}`);
 });
 
 /*
@@ -151,23 +151,23 @@ precondition: user authorizes GitHub to use account, server is listening
 postcondition: user is logged in/has information stored on server
 */
 app.get('/user/login/callbackfunc', async (req,res) => {
-    var access_obj = await performUserCallbackFunction(req.query.code);
-    await performUserLookup(access_obj.access_token);
-    let user_json = getUser();
+    var accessObj = await performUserCallbackFunction(req.query.code);
+    await performUserLookup(accessObj.access_token);
+    let userJson = getUser();
     //database lookup/insertion
     let db = client.db('CodeTrivia');
     let collection = db.collection('Users');
-    var query = { "username": user_json.username, "id": user_json.user_id};
-    await collection.find(query).toArray().then(user_val => {
+    var query = { "username": userJson.username, "id": userJson.userId};
+    await collection.find(query).toArray().then(userVal => {
         //if there is no user in the system for that username, then add one
-        console.log(user_val);
-        if(!user_val.length){
-            const user_structure = {
-                username: user_json.username,
-                id: user_json.user_id,
+        console.log(userVal);
+        if(!userVal.length){
+            const userStructure = {
+                username: userJson.username,
+                id: userJson.userId,
                 scores: []
             };
-            collection.insertOne(user_structure);
+            collection.insertOne(userStructure);
             console.log("Inserted a new user into the database");
         }
     });
@@ -192,7 +192,7 @@ precondition: connected to server, category is specified in query parameters
 postcondition: an array of scores for the specified category are returned.
 */
 app.get('/scores', async (req, res) => {
-    let scores_ret_list = [];
+    let scoresRetList = [];
     let db = client.db('CodeTrivia');
     let collection = db.collection('Users');
     let document = await collection.find();
@@ -200,17 +200,17 @@ app.get('/scores', async (req, res) => {
     await document.toArray().then((result) =>{
         for(const elem of result){
             let scores = elem.scores;
-            const cat_val = req.query.category;
-            var cat_scores = scores.filter(i => {
-                return i.category == cat_val;
+            const catVal = req.query.category;
+            var catScores = scores.filter(i => {
+                return i.category == catVal;
             });
-            if(cat_scores[0] != null){
-                scores_ret_list.push({name:elem.username, score:cat_scores[0].score});
+            if(catScores[0] != null){
+                scoresRetList.push({name:elem.username, score:catScores[0].score});
             }
         }
     });
 
-    res.send(scores_ret_list);   
+    res.send(scoresRetList);   
 
 });
 
@@ -236,17 +236,17 @@ app.post('/scores/updateScore', async (req, res) => {
     let collection = db.collection('Users');
 
 
-    var score_in_cat = false;
+    var scoreInCat = false;
     await collection.findOne(query).then(response => {
             for (var item of response.scores){
                 if(item.category == req.body.category){
-                    score_in_cat = true;
+                    scoreInCat = true;
                 }
             }
         }
     );
 
-    if(score_in_cat){   
+    if(scoreInCat){   
         query = { "username": username, "scores.category": req.body.category};
         try{
             await collection.updateOne(query, 

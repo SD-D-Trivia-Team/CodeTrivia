@@ -14,8 +14,8 @@ class Score {
     postcondition: return score value
      */
     get Score(){
-        var score_val = this.score;
-        return score_val;
+        var scoreVal = this.score;
+        return scoreVal;
     }
     /*
     set Score(value)
@@ -32,8 +32,8 @@ class Score {
     postcondition: return username of score
     */
     get Name(){
-        var name_val = this.username;
-        return name_val;
+        var nameVal = this.username;
+        return nameVal;
     }
     /*
     set Name(value)
@@ -66,7 +66,7 @@ class Leaderboard {
 
         $("#leaderboard-header").html(`<h3 id="cat-header">${sessionStorage.getItem('cat_full')} Quiz</h3>
         <h4>Leaderboard - ${this.date.toLocaleDateString('en-US')}</h4>`);
-        var init_score = true;
+        var initScore = true;
         this.scores = [];
         
         //fetch the data from the server side
@@ -75,41 +75,41 @@ class Leaderboard {
         }).then(response => response.json())
           .then(data => {
 
-            data.sort((first_item, second_item) => second_item.score - first_item.score);
-            var leaderboard_ind = 1;
+            data.sort((firstItem, secondItem) => secondItem.score - firstItem.score);
+            var leaderboardInd = 1;
 
             for(const elem of data){
 
-                let score_obj = new Score(elem.name, this.category, elem.score);
-                this.scores.push(score_obj);
+                let scoreObj = new Score(elem.name, this.category, elem.score);
+                this.scores.push(scoreObj);
 
                 //top score
-                if(init_score){
-                    let score_str = elem.score.toLocaleString('en-US');
+                if(initScore){
+                    let scoreStr = elem.score.toLocaleString('en-US');
                     $("#leaderboard-container").html(` <div id="top-leaderboard-entry" class="leaderboard-entry row w-75">
-                    <h4 id="top-leaderboard-number auto-marg" class="leaderboard-number col-sm-1">${leaderboard_ind}</h4>
+                    <h4 id="top-leaderboard-number auto-marg" class="leaderboard-number col-sm-1">${leaderboardInd}</h4>
                     <div class="img-cont col-sm-2 auto-marg">
                         <img id="top-leaderboard-img" class="leaderboard-img auto-marg" src="../images/default_avatar.png" alt="A placeholder for the avatar image">
                     </div>
                     <h5 id="top-leaderboard-name" class="leaderboard-name auto-marg col-sm-6">${elem.name}</h5>
-                    <h5 id="top-leaderboard-score" class="leaderboard-score auto-marg col-sm-3">${score_str}</h5>
+                    <h5 id="top-leaderboard-score" class="leaderboard-score auto-marg col-sm-3">${scoreStr}</h5>
                     </div>`);
-                    init_score = false;
-                    leaderboard_ind = leaderboard_ind + 1;
+                    initScore = false;
+                    leaderboardInd = leaderboardInd + 1;
                 }
 
                 //bottom scores
                 else{
-                    let score_str = elem.score.toLocaleString('en-US');
+                    let scoreStr = elem.score.toLocaleString('en-US');
                     $("#leaderboard-container").append(` <div class="leaderboard-entry row w-75">
-                        <h4 class="leaderboard-number auto-marg col-sm-1">${leaderboard_ind}</h4>
+                        <h4 class="leaderboard-number auto-marg col-sm-1">${leaderboardInd}</h4>
                         <div class="img-cont col-sm-2">
                             <img class="leaderboard-img" src="../images/default_avatar.png" alt="A placeholder for the avatar image">
                         </div>
                         <h5 class="leaderboard-name auto-marg col-sm-6">${elem.name}</h5>
-                        <h5 class="leaderboard-score auto-marg col-sm-3">${score_str}</h5>
+                        <h5 class="leaderboard-score auto-marg col-sm-3">${scoreStr}</h5>
                     </div>`);
-                    leaderboard_ind = leaderboard_ind + 1;
+                    leaderboardInd = leaderboardInd + 1;
                 }
             }
         });
@@ -123,6 +123,6 @@ precondition: page has loaded
 postcondition: new leaderboard is created and adds to page
 */
 $(document).ready(function() {
-    var current_leaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
-    current_leaderboard.viewLeaderboard();
+    var currentLeaderboard = new Leaderboard(sessionStorage.getItem('cat_tag'));
+    currentLeaderboard.viewLeaderboard();
 });
